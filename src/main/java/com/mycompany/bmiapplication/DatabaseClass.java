@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  *
@@ -25,8 +27,8 @@ public class DatabaseClass {
     public DatabaseClass() 
     {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bmicaldatabase", "root", "");
+            Class.forName("org.sqlite.JDBC");
+            con = DriverManager.getConnection("jdbc:sqlite:bmicaldatabase.db");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,14 +37,22 @@ public class DatabaseClass {
     }
     
     public HashMap getUserData(String userEmail) {
-        HashMap<String, String> loginCres = new HashMap<String, String>();
-        
-        
-        loginCres.put("userEmail", "ElvinEmail");
-        
-        loginCres.put("userPassword", "ElvinPassword");
-        
-        
+        HashMap<String, String> loginCres = null;
+        try {
+            loginCres = new HashMap<String, String>();
+            
+            ps = con.prepareStatement("Select userEmail, userPassword from users where userEmail = ?");
+            ps.setString(1, userEmail);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                loginCres.put("userEmail", String.valueOf(rs.getObject(1)));
+                loginCres.put("userPassword", String.valueOf(rs.getObject(2)));
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return loginCres;
     }
     
@@ -57,5 +67,28 @@ public class DatabaseClass {
         return rs;
     }
     
-    public 
+    public void registerUserData(String userName, String email, String password) {
+        try {
+            ps = con.prepareStatement("insert into users (username, useremail, userpassword) values (?,?,?);");
+            ps.setString(1, userName);
+            ps.setString(2, email);
+            ps.setString(3, password);
+            ps.execute();
+            
+            Alert alert;
+            alert = new Alert(Alert.AlertType.INFORMATION, "your User has been registered", ButtonType.OK);
+            alert.setHeight(100);
+            alert.setWidth(200);
+            alert.show();
+            
+        } catch (SQLException ex) {
+            Alert alert;
+            alert = new Alert(Alert.AlertType.ERROR, "your registration has failed", ButtonType.OK);
+            alert.setHeight(100);
+            alert.setWidth(200);
+            alert.show();
+        }
+    }
+    
+    
 }

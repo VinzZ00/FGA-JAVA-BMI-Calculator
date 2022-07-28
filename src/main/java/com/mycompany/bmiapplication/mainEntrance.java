@@ -25,6 +25,7 @@ import javafx.stage.Stage;
  */
 public class mainEntrance extends Application {
     
+    static DatabaseClass db = new DatabaseClass();
     
     
     public static void main(String[] args) {
@@ -33,8 +34,7 @@ public class mainEntrance extends Application {
 
    
     public void start(Stage primaryStage) {
-        DatabaseClass db = new DatabaseClass();
-        Login.render(primaryStage);
+        Login.render(primaryStage, db);
     }
  
     
