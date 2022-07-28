@@ -33,6 +33,7 @@ public class mainEntrance extends Application {
 
    
     public void start(Stage primaryStage) {
+        DatabaseClass db = new DatabaseClass();
         Login.render(primaryStage);
     }
  

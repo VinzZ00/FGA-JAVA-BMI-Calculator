@@ -26,7 +26,7 @@ public class DatabaseClass {
     {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dope", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bmicaldatabase", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,5 +57,5 @@ public class DatabaseClass {
         return rs;
     }
     
-    
+    public 
 }
