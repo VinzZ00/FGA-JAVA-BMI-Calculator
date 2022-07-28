@@ -80,14 +80,20 @@ public class register {
         //FOOTER REGISTER
         registerBut = new Button("Register");
         registerBut.setOnAction(e -> {
-            if (userPasswordField.getText().equals(userPasswordConfirmField.getText()))
-            {
-                db.registerUserData(userNameField.getText(), userEmailField.getText(), userPasswordField.getText());
+            if (userNameField.getText().isEmpty() || userEmailField.getText().isEmpty() || userPasswordField.getText().isEmpty() || userPasswordConfirmField.getText().isEmpty()) {
+                alert = new Alert(AlertType.ERROR, "Please fill out the form", ButtonType.OK);
+                    alert.setHeight(100);
+                    alert.setWidth(200);
+                    alert.show();
             } else {
-                 alert = new Alert(AlertType.ERROR, "The password dont match", ButtonType.OK);
-                 alert.setHeight(100);
-                 alert.setWidth(200);
-                 alert.show();
+                if (userPasswordField.getText().equals(userPasswordConfirmField.getText())) {
+                    db.registerUserData(userNameField.getText(), userEmailField.getText(), userPasswordField.getText());
+                } else {
+                    alert = new Alert(AlertType.ERROR, "The password dont match", ButtonType.OK);
+                    alert.setHeight(100);
+                    alert.setWidth(200);
+                    alert.show();
+                }
             }
         });
         loginHyperlink = new Hyperlink("Login");

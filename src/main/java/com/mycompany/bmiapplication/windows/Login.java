@@ -71,15 +71,22 @@ public class Login {
         });
         
         loginBut.setOnAction((e) -> {
-            HashMap<String, String> usercres =  db.getUserData(emailField.getText());
-            if (usercres.isEmpty()) {
-                alert = new Alert(Alert.AlertType.ERROR, "Your Email Hasn't been Registered yet", ButtonType.OK);
-                alert.setWidth(200);
-                alert.setHeight(200);
-                alert.show();
-            } else{
-                if (usercres.get("userPassword").equals(passwordField.getText())) {
-                    //masuk ke home page
+            if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR, "Please Fill out the form", ButtonType.OK);
+                    alert.setWidth(200);
+                    alert.setHeight(200);
+                    alert.show();
+            } else {
+                HashMap<String, String> usercres = db.getUserData(emailField.getText());
+                if (usercres.isEmpty()) {
+                    alert = new Alert(Alert.AlertType.ERROR, "Your Email Hasn't been Registered yet", ButtonType.OK);
+                    alert.setWidth(200);
+                    alert.setHeight(200);
+                    alert.show();
+                } else {
+                    if (usercres.get("userPassword").equals(passwordField.getText())) {
+                        
+                    }
                 }
             }
         });
