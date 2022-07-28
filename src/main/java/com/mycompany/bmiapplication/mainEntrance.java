@@ -25,13 +25,15 @@ import javafx.stage.Stage;
  */
 public class mainEntrance extends Application {
     
+    
+    
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
+        DatabaseClass db = new DatabaseClass();
         Label headerLabel = new Label("Welcome To Login Page");
         headerLabel.setFont(new Font("Sans Serif", 25));
         Button loginBut = new Button("Login");

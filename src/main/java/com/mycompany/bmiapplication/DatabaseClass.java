@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  *
@@ -23,13 +25,37 @@ public class DatabaseClass {
     public DatabaseClass() 
     {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BMICalDB", "root", "");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dope", "root", "");
         } catch (Exception e) {
             e.printStackTrace();
         }
         
         
     }
+    
+    public HashMap getUserData(String userEmail) {
+        HashMap<String, String> loginCres = new HashMap<String, String>();
+        
+        
+        loginCres.put("userEmail", "ElvinEmail");
+        
+        loginCres.put("userPassword", "ElvinPassword");
+        
+        
+        return loginCres;
+    }
+    
+    public ResultSet getTrackData(String id) {
+        try {
+            ps = con.prepareStatement("Select * from Track where userId = ?");
+            ps.setString(0, id);
+            
+            rs = ps.executeQuery();
+        } catch (SQLException sQLException) {
+        }
+        return rs;
+    }
+    
     
 }
