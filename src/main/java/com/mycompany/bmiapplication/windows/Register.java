@@ -9,14 +9,8 @@ import com.mycompany.bmiapplication.DatabaseClass;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -24,10 +18,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- *
  * @author user
  */
-public class register {
+public class Register {
 
     static Label HeaderRegister, userName, userEmail, userPassword, userPasswordConfirm;
     static TextField userNameField, userEmailField;
@@ -38,25 +31,19 @@ public class register {
     static GridPane regform;
     static Alert alert;
 
-    public register(Stage primaryStage, DatabaseClass db) {
-        register(db, primaryStage);
-    }
-    
-    
-    
-    public static void register(DatabaseClass db, Stage primaryStage) {
-        register.db = db;
+    public static void render(Stage primaryStage, DatabaseClass db) {
+        Register.db = db;
         //HEADER REGISTER
         HeaderRegister = new Label("Register");
-        HeaderRegister.setFont(new Font("Sans Serif",25));
-        
-        
+        HeaderRegister.setFont(new Font("Sans Serif", 25));
+
+
         //FORM REGISTER
         userName = new Label("User Name");
         userEmail = new Label("Email");
         userPassword = new Label("Password");
         userPasswordConfirm = new Label("Confirm Password");
-        
+
         userNameField = new TextField();
         userEmailField = new TextField();
         userPasswordField = new PasswordField();
@@ -97,26 +84,22 @@ public class register {
             }
         });
         loginHyperlink = new Hyperlink("Login");
-        loginHyperlink.setOnAction(e -> {
-            Login login = new Login();
-            login.render(primaryStage, db);
-        });
-        
+        loginHyperlink.setOnAction(e -> Login.render(primaryStage, db));
+
         VBox footer = new VBox();
         footer.setSpacing(10);
         footer.getChildren().addAll(registerBut, loginHyperlink);
         footer.setAlignment(Pos.CENTER);
-        
-        
-        
+
+
         BorderPane root = new BorderPane(regform, HeaderRegister, null, footer, null);
-        root.setAlignment(HeaderRegister, Pos.TOP_CENTER);
-        root.setAlignment(regform, Pos.CENTER);
-        root.setAlignment(footer , Pos.BOTTOM_CENTER);
-        
-        root.setMargin(footer, new Insets(30,0,10,0));
-        root.setMargin(HeaderRegister, new Insets(10, 0, 10, 0));
-        
+        BorderPane.setAlignment(HeaderRegister, Pos.TOP_CENTER);
+        BorderPane.setAlignment(regform, Pos.CENTER);
+        BorderPane.setAlignment(footer, Pos.BOTTOM_CENTER);
+
+        BorderPane.setMargin(footer, new Insets(30, 0, 10, 0));
+        BorderPane.setMargin(HeaderRegister, new Insets(10, 0, 10, 0));
+
         Scene loginScene = new Scene(root);
 
         primaryStage.setWidth(400);
@@ -125,5 +108,5 @@ public class register {
         primaryStage.setScene(loginScene);
         primaryStage.show();
     }
-    
+
 }

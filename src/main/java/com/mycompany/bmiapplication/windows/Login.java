@@ -1,23 +1,17 @@
 package com.mycompany.bmiapplication.windows;
 
 import com.mycompany.bmiapplication.DatabaseClass;
-import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
 
 public class Login {
     
@@ -52,30 +46,25 @@ public class Login {
         Footer.setSpacing(10);
         Footer.getChildren().add(loginBut);
         Footer.getChildren().add(register);
-        
-        
+
+
         BorderPane.setAlignment(Footer, Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(form, Pos.CENTER);
         BorderPane.setAlignment(headerLabel, Pos.TOP_CENTER);
-        
-        
+
+
         BorderPane root = new BorderPane(form, headerLabel, null, Footer, null);
-
-
-        root.setMargin(Footer, new Insets(10, 10, 10, 10));
-        
+        BorderPane.setMargin(Footer, new Insets(10, 10, 10, 10));
         root.setPadding(new Insets(10, 0, 0, 10));
-        
-        register.setOnAction(e -> {
-            new register(primaryStage, db);
-        });
-        
+
+        register.setOnAction(e -> Register.render(primaryStage, db));
+
         loginBut.setOnAction((e) -> {
             if (emailField.getText().isEmpty() || passwordField.getText().isEmpty()) {
                 alert = new Alert(Alert.AlertType.ERROR, "Please Fill out the form", ButtonType.OK);
-                    alert.setWidth(200);
-                    alert.setHeight(200);
-                    alert.show();
+                alert.setWidth(200);
+                alert.setHeight(200);
+                alert.show();
             } else {
                 HashMap<String, String> usercres = db.getUserData(emailField.getText());
                 if (usercres.isEmpty()) {
@@ -85,7 +74,7 @@ public class Login {
                     alert.show();
                 } else {
                     if (usercres.get("userPassword").equals(passwordField.getText())) {
-                        
+
                     }
                 }
             }

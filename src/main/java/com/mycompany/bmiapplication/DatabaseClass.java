@@ -5,14 +5,11 @@
  */
 package com.mycompany.bmiapplication;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+
+import java.sql.*;
+import java.util.HashMap;
 
 /**
  *
@@ -23,28 +20,25 @@ public class DatabaseClass {
     Connection con;
     ResultSet rs;
     PreparedStatement ps;
-    
-    public DatabaseClass() 
-    {
+
+    public DatabaseClass() {
         try {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:bmicaldatabase.db");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
     }
-    
-    public HashMap getUserData(String userEmail) {
+
+    public HashMap<String, String> getUserData(String userEmail) {
         HashMap<String, String> loginCres = null;
         try {
-            loginCres = new HashMap<String, String>();
-            
+            loginCres = new HashMap<>();
+
             ps = con.prepareStatement("Select userEmail, userPassword from users where userEmail = ?");
             ps.setString(1, userEmail);
             rs = ps.executeQuery();
-            
+
             if (rs.next()) {
                 loginCres.put("userEmail", String.valueOf(rs.getObject(1)));
                 loginCres.put("userPassword", String.valueOf(rs.getObject(2)));
@@ -59,10 +53,11 @@ public class DatabaseClass {
     public ResultSet getTrackData(String id) {
         try {
             ps = con.prepareStatement("Select * from Track where userId = ?");
-            ps.setString(0, id);
+            ps.setString(1, id);
             
             rs = ps.executeQuery();
         } catch (SQLException sQLException) {
+            //Exception
         }
         return rs;
     }
