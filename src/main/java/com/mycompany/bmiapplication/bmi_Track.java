@@ -18,13 +18,28 @@ public class bmi_Track {
     private int userid;
     private String dateCreated;
     private double height, weight;
+    private double bmiScale;
+
+    public void setBmiScale(double bmiScale) {
+        this.bmiScale = bmiScale;
+    }
+
+    
+    public double getBmiScale() {
+        return bmiScale;
+    }
+
+    public bmi_Track() {}
 
     public bmi_Track(int userid, String dateCreated, double height, double weight) {
         this.userid = userid;
         this.dateCreated = dateCreated;
         this.height = height;
         this.weight = weight;
+        this.bmiScale = BMICalculator(height, weight);
     }
+    
+    
 
     public int getUserid() {
         return userid;
@@ -56,6 +71,11 @@ public class bmi_Track {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+    
+    public double BMICalculator(double tall, double weight) {
+        double tallSquare = Math.pow((tall/100), 2);
+        return weight/tallSquare;
     }
     
     

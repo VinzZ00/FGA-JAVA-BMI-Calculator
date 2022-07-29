@@ -119,6 +119,7 @@ public class register {
         
         Scene loginScene = new Scene(root);
 
+        primaryStage.centerOnScreen();
         primaryStage.setWidth(400);
         primaryStage.setHeight(400);
         primaryStage.setTitle("Register Page");

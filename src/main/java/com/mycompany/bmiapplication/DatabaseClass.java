@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -23,6 +25,10 @@ public class DatabaseClass {
     Connection con;
     ResultSet rs;
     PreparedStatement ps;
+    
+    String today = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            .format(LocalDateTime.now());
+    
     
     public DatabaseClass() 
     {
@@ -49,6 +55,8 @@ public class DatabaseClass {
                 loginCres.put("userId", String.valueOf(rs.getString(1)));
                 loginCres.put("userEmail", String.valueOf(rs.getObject(2)));
                 loginCres.put("userPassword", String.valueOf(rs.getObject(3)));
+                
+                System.out.println(String.valueOf(rs.getString(3)));
             }
             
         } catch (SQLException ex) {
@@ -59,8 +67,8 @@ public class DatabaseClass {
     
     public ResultSet getTrackData(String id) {
         try {
-            ps = con.prepareStatement("Select * from Track where userId = ?");
-            ps.setString(0, id);
+            ps = con.prepareStatement("Select * from bmi_track where userId = ?");
+            ps.setString(1, id);
             
             rs = ps.executeQuery();
         } catch (SQLException sQLException) {
@@ -89,6 +97,18 @@ public class DatabaseClass {
             alert.setHeight(100);
             alert.setWidth(200);
             alert.show();
+        }
+    }
+    
+    public void addTrack(String id, double height, double weight) {
+        try {
+            ps = con.prepareStatement("insert into bmi_track (userId, dateCreated, height, weight) values (?, ?, ?, ?);");
+            ps.setString(1, id);
+            ps.setString(2, today);
+            ps.setDouble(3, height);
+            ps.setDouble(4, height);
+        } catch (Exception e) {
+            System.out.println("Di add track pass mau nguerry ");
         }
     }
     
