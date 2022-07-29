@@ -41,13 +41,14 @@ public class DatabaseClass {
         try {
             loginCres = new HashMap<String, String>();
             
-            ps = con.prepareStatement("Select userEmail, userPassword from users where userEmail = ?");
+            ps = con.prepareStatement("Select userId, userEmail, userPassword from users where userEmail = ?");
             ps.setString(1, userEmail);
             rs = ps.executeQuery();
             
             if (rs.next()) {
-                loginCres.put("userEmail", String.valueOf(rs.getObject(1)));
-                loginCres.put("userPassword", String.valueOf(rs.getObject(2)));
+                loginCres.put("userId", String.valueOf(rs.getString(1)));
+                loginCres.put("userEmail", String.valueOf(rs.getObject(2)));
+                loginCres.put("userPassword", String.valueOf(rs.getObject(3)));
             }
             
         } catch (SQLException ex) {
@@ -63,6 +64,7 @@ public class DatabaseClass {
             
             rs = ps.executeQuery();
         } catch (SQLException sQLException) {
+            System.out.println("INI dari GETDATATRACK");
         }
         return rs;
     }

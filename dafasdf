@@ -1,0 +1,66 @@
+[33mcommit ffa042c5c5b67285982b3e79e471b363b0453613[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Elvin <vinzln1209@gmail.com>
+Date:   Fri Jul 29 01:04:04 2022 +0700
+
+    pembenaran logika
+
+[33mcommit 0b9c546f152bb2e778e24da28ba08f12c2803fc3[m
+Author: Elvin <vinzln1209@gmail.com>
+Date:   Fri Jul 29 00:53:05 2022 +0700
+
+    Pembenaran .db
+
+[33mcommit 6bf66e8b3090cf772864bf2c0ad7167e8bbc9c58[m
+Author: Elvin <vinzln1209@gmail.com>
+Date:   Fri Jul 29 00:36:32 2022 +0700
+
+    penambahan database sqlite, penambahan page register, penambahan logika login dan register user
+
+[33mcommit 508ddf345b8dea4bde5465905e0f7322768399bc[m
+Author: Elvin <vinzln1209@gmail.com>
+Date:   Thu Jul 28 16:35:20 2022 +0700
+
+    Penambahan file sql
+
+[33mcommit f212e1daf767fd52df359ea464ccc006f326e322[m
+Merge: da17406 12a2b26
+Author: Elvin <vinzln1209@gmail.com>
+Date:   Thu Jul 28 16:10:37 2022 +0700
+
+    merge antara SeeN dan Main
+
+[33mcommit da17406a0c30b354dc87191c880cb45fe89ce799[m
+Author: Elvin <vinzln1209@gmail.com>
+Date:   Thu Jul 28 16:05:53 2022 +0700
+
+    commit pengembangan Database Class <Belom Selesai>
+
+[33mcommit 12a2b260e36b36ff242fa7ef889ba12a5f042048[m[33m ([m[1;32mSeeN[m[33m)[m
+Author: Senna Annaba Ahmad <sennaannaba@gmail.com>
+Date:   Thu Jul 28 15:55:20 2022 +0700
+
+    Delete target dir
+
+[33mcommit bba783e0b76d740fa17f730bda349e3556f66e61[m
+Author: Senna Annaba Ahmad <sennaannaba@gmail.com>
+Date:   Thu Jul 28 15:48:45 2022 +0700
+
+    Buat Main Method Clean
+
+[33mcommit 4f128b18a48105623404ca7795b9e7b222d6574a[m
+Author: Senna Annaba Ahmad <sennaannaba@gmail.com>
+Date:   Thu Jul 28 15:27:34 2022 +0700
+
+    Add Git Ignore For IDEA
+
+[33mcommit 01f6d3a68dad607c7d36c093fb1e9b7ca718907e[m
+Author: Elvin <vinzln1209@gmail.com>
+Date:   Thu Jul 28 15:17:22 2022 +0700
+
+    Penambahan class Database
+
+[33mcommit f5fd5d6404f3b15977ef5761168263b37a563ec7[m
+Author: Elvin <vinzln1209@gmail.com>
+Date:   Thu Jul 28 14:28:49 2022 +0700
+
+    init commit
