@@ -106,9 +106,11 @@ public class DatabaseClass {
             ps.setString(1, id);
             ps.setString(2, today);
             ps.setDouble(3, height);
-            ps.setDouble(4, height);
+            ps.setDouble(4, weight);
+            ps.execute();
         } catch (Exception e) {
             System.out.println("Di add track pass mau nguerry ");
+            e.printStackTrace();
         }
     }
     

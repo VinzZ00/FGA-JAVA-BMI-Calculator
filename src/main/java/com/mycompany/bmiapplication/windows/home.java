@@ -8,26 +8,30 @@ package com.mycompany.bmiapplication.windows;
 import com.mycompany.bmiapplication.DatabaseClass;
 import com.mycompany.bmiapplication.bmi_Track;
 import java.lang.reflect.Field;
-import java.sql.ResultSet;import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.stage.Screen;
-import javafx.stage.StageStyle;
-import javafx.scene.text.Text;
+import javafx.scene.layout.Pane;
+
 
 /**
  *
@@ -38,21 +42,19 @@ public class home {
     static Label headerLabel, heightLabel, weightLabel;
     static TextField heightField, weightField;
     static Button submit;
-    static ScrollPane sp;
     static HBox footer;
+    static HBox inputForm;
     
+    static DatabaseClass db;
     
-    public static void render(Stage primaryStage, String id) {
-//        createtable();
+    public static void render(Stage primaryStage, String id, DatabaseClass db) {
+        home.db = db;
         
         VBox root = new VBox();
         root.setSpacing(10);
-        
         headerLabel = new Label("Your Stat");
         headerLabel.setStyle("-fx-font: normal bold 100px 'serif';");
         headerLabel.setAlignment(Pos.TOP_CENTER);
-        root.setMargin(headerLabel, new Insets(0,10,10,10));
-        root.setAlignment(Pos.CENTER);
         
         heightLabel = new Label("Height");
         weightLabel = new Label("Weight");
@@ -62,20 +64,36 @@ public class home {
         
         submit = new Button("ADD");
         
-        HBox inputForm = new HBox();
+        inputForm = new HBox();
         inputForm.setSpacing(20);
         
         inputForm.getChildren().addAll(heightLabel, heightField, weightLabel, weightField, submit);
         
-        root.getChildren().add(headerLabel);
+//        insertNodes(root, id);
+        root.getChildren().add(0, headerLabel);
+        root.getChildren().add(1, populatetable(id, home.createTable()));
+        root.getChildren().add(2, inputForm);
+
+        root.setMargin(headerLabel, new Insets(0,10,10,10));
+        root.setAlignment(Pos.CENTER);
+        
         root.setMargin(headerLabel, new Insets(10,10,10,10));
-        
-        root.getChildren().add(populatetable(id, home.createTable()));
         root.setMargin(root.getChildren().get(1), new Insets(10,10,10,10));
-        
-        root.getChildren().add(inputForm);
         root.setMargin(inputForm, new Insets(10,10,10,10));
         
+        
+        
+        submit.setOnAction((ActionEvent event) -> {
+            if (weightField.getText().isEmpty() || heightField.getText().isEmpty()) { 
+                new Alert(Alert.AlertType.ERROR, "Please Fill the height and weight field", ButtonType.OK);
+            } else {
+                    db.addTrack(id, Double.valueOf(heightField.getText()), Double.valueOf(weightField.getText()));
+            }
+           root.getChildren().remove(1);
+           root.getChildren().add(1, populatetable(id, createTable()));
+        });
+        
+//        long lastRefreshTime = 0;
         Scene homescene = new Scene(root);
         /*
         jangan di hapus ini mungkin berguna
@@ -102,9 +120,10 @@ public class home {
     
     public static TableView populatetable(String id, TableView tableView) { //Method buat create table;
         
-        ResultSet dataTable = new DatabaseClass().getTrackData(id);
+        ResultSet dataTable = db.getTrackData(id);
         
-        Vector<bmi_Track> BMI_Datas = new Vector<bmi_Track>();
+        
+        ArrayList<bmi_Track> BMI_Datas = new ArrayList<bmi_Track>();
 //        BMI_Datas.add(new bmi_Track(1, "2021-12-05", 3.0D, 3.0D));
 //          System.out.println(id);
         
@@ -113,16 +132,15 @@ public class home {
                     System.out.println("sini masuk");
                     BMI_Datas.add(new bmi_Track(dataTable.getInt(1), dataTable.getString(2), dataTable.getDouble(3), dataTable.getDouble(4)));
                 }
-                System.out.println(BMI_Datas.get(0).getDateCreated());
         } catch (SQLException ex) {
             System.out.println("Erorr di populate vector untuk mengisi table");
         }
-        
-        if (!BMI_Datas.isEmpty()) {
-                for (bmi_Track bmi : BMI_Datas) {
-                    tableView.getItems().add(bmi);
-                }
-        } 
+        System.out.println(BMI_Datas.size());
+//        if (!BMI_Datas.isEmpty()) {
+//                for (bmi_Track bmi : BMI_Datas) {
+                    tableView.setItems(FXCollections.observableArrayList(BMI_Datas));
+//                }
+//        } 
         
         
         return tableView;
@@ -139,13 +157,8 @@ public class home {
                     column.setPrefWidth(44);
                     tableView.getColumns().add(column);
                 }
-                TableColumn<bmi_Track, String> column = new TableColumn<>("BMI Scale");
-                column.setCellValueFactory(new PropertyValueFactory<>("BMI"));
-                
-                tableView.getColumns().add(column);
-                
             tableView.getColumns().forEach( c -> {
-                ((TableColumn<bmi_Track, String>) c ).prefWidthProperty().bind(tableView.widthProperty().multiply(1/(double)6));
+                ((TableColumn<bmi_Track, String>) c ).prefWidthProperty().bind(tableView.widthProperty().multiply(1/(double)5));
             });
         return tableView;
     }

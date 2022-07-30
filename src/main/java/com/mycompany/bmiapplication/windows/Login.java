@@ -86,7 +86,7 @@ public class Login {
                 } else {
                     if (usercres.get("userPassword").equals(passwordField.getText())) {
                         
-                        new home().render(primaryStage, usercres.get("userId"));
+                        new home().render(primaryStage, usercres.get("userId"), db);
                     }
                 }
             }
