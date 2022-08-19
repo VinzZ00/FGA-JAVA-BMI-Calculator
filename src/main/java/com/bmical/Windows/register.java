@@ -98,8 +98,8 @@ public class register {
         });
         loginHyperlink = new Hyperlink("Login");
         loginHyperlink.setOnAction(e -> {
-            Login login = new Login();
-            login.render(primaryStage, db);
+//            Login login = new Login();
+            Login.render(primaryStage, db);
         });
         
         VBox footer = new VBox();
