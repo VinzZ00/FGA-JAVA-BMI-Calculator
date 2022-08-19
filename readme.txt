@@ -10,7 +10,7 @@
 in case of :
 
 
-1. jika import dan error dan harus membuat maven project baru maka, maven archetype yang digunakan adalah 
+1. jika ketika import error dan harus membuat maven project baru maka, maven archetype yang digunakan adalah 
 
 maven-archetype-quickstart dari apache.org versi 1.4
 
