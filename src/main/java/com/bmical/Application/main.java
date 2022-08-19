@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.bmiapplication;
+package com.bmical.Application;
 
-import com.mycompany.bmiapplication.windows.Login;
+import com.bmical.Windows.Login;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author user
  */
-public class mainEntrance extends Application {
+public class main extends Application {
     
     static DatabaseClass db = new DatabaseClass();
     

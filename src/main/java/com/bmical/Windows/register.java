@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.bmiapplication.windows;
+package com.bmical.Windows;
 
-import com.mycompany.bmiapplication.DatabaseClass;
+import com.bmical.Application.DatabaseClass;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

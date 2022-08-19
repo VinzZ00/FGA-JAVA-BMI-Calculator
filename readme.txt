@@ -1,3 +1,21 @@
+1. java version jdk 1.8.0_251
+2. install maven eclipse
+------> https://maven.apache.org/download.cgi
+3. configure environment variable
+------> https://www.youtube.com/watch?v=RfCWg5ay5B0
+4. install M2Eclipse eclipse plugin
+5. database akan terbuat sendiri dengan code pada class database
+6. main method berada di main.java
+
+in case of :
+
+
+1. jika import dan error dan harus membuat maven project baru maka, maven archetype yang digunakan adalah 
+
+maven-archetype-quickstart dari apache.org versi 1.4
+
+2. pom.xml corrupted maka bisa mengunakan code dibawah ini
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -81,3 +99,5 @@
     </pluginManagement>
   </build>
 </project>
+
+

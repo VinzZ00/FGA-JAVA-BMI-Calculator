@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.bmiapplication.windows;
+package com.bmical.Windows;
 
-import com.mycompany.bmiapplication.DatabaseClass;
-import com.mycompany.bmiapplication.bmi_Track;
+import com.bmical.Application.DatabaseClass;
+import com.bmical.Application.bmi_Track;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;

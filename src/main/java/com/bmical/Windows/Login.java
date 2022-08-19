@@ -1,6 +1,6 @@
-package com.mycompany.bmiapplication.windows;
+package com.bmical.Windows;
 
-import com.mycompany.bmiapplication.DatabaseClass;
+import com.bmical.Application.DatabaseClass;
 import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

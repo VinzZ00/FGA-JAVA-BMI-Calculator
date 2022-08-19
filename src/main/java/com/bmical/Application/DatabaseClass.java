@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.bmiapplication;
+package com.bmical.Application;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -35,11 +36,26 @@ public class DatabaseClass {
         try {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:bmicaldatabase.db");
+            rs = con.createStatement().executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='users';");
+            // check for table existence
+            if (!rs.next()) {
+            	// create new database from scratch with empty tables
+				con.createStatement().execute(
+						"CREATE TABLE `users` (  `userId` integer primary key autoincrement ,  `userName` varchar(255) NOT NULL,  `userEmail` varchar(255) NOT NULL,  `userPassword` varchar(255) NOT NULL);");
+				con.createStatement()
+						.execute("CREATE TABLE bmi_track (\r\n" + "userId integer  not null,\r\n"
+								+ "dateCreated date not null,\r\n" + "height double not null,\r\n"
+								+ "weight double not null,\r\n" + "foreign key (userId)\r\n"
+								+ "references users(userId),\r\n" + "primary key(userId, dateCreated));");
+				con.createStatement().execute("PRAGMA foreign_keys = ON;");
+				System.out.println("table Created successfully");
+			} else {
+				// table has already exist, this is an old database
+				System.out.println("Table has existed");
+			}
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        
     }
     
     public HashMap getUserData(String userEmail) {
@@ -92,6 +108,7 @@ public class DatabaseClass {
             alert.show();
             
         } catch (SQLException ex) {
+        	ex.printStackTrace();
             Alert alert;
             alert = new Alert(Alert.AlertType.ERROR, "your registration has failed", ButtonType.OK);
             alert.setHeight(100);
