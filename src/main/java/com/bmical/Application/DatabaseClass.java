@@ -58,6 +58,30 @@ public class DatabaseClass {
         }
     }
     
+    public void updateBMITrack(double height, double weight, String dateString) {
+    	try {
+			ps = con.prepareStatement("update bmi_track set height = ?, weight = ? where dateCreated = ? ");
+			ps.setDouble(1, height);
+			ps.setDouble(2, weight);
+			ps.setString(3, dateString);
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void deleteBMITrack(String dateString) {
+    	try {
+			ps = con.prepareStatement("delete from bmi_track where dateCreated = ?");
+			ps.setString(1, dateString);
+			ps.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     public HashMap getUserData(String userEmail) {
         HashMap<String, String> loginCres = null;
         try {

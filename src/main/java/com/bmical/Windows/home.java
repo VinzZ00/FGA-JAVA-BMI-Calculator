@@ -10,6 +10,8 @@ import com.bmical.Application.bmi_Track;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Vector;
 import javafx.collections.FXCollections;
@@ -31,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 
 
 /**
@@ -39,9 +42,9 @@ import javafx.scene.layout.Pane;
  */
 public class home {
     
-    static Label headerLabel, heightLabel, weightLabel;
-    static TextField heightField, weightField;
-    static Button submit;
+    static Label headerLabel, heightLabel, weightLabel, dateLabel;
+    static TextField heightField, weightField, dateField;
+    static Button submit, update, delete;
     static HBox footer;
     static HBox inputForm;
     
@@ -52,31 +55,46 @@ public class home {
         
         VBox root = new VBox();
         root.setSpacing(10);
+        
+        // Header
         headerLabel = new Label("Your Stat");
         headerLabel.setStyle("-fx-font: normal bold 100px 'serif';");
         headerLabel.setAlignment(Pos.TOP_CENTER);
         
+        // input Form Footer
+        
+        dateLabel = new Label("Date"); 
         heightLabel = new Label("Height");
         weightLabel = new Label("Weight");
         
+        dateField = new TextField(DateTimeFormatter
+        		.ofPattern("yyyy-MM-dd")
+        		.format(LocalDateTime.now()));
+        dateField.setEditable(false);
         heightField = new TextField();
         weightField = new TextField();
         
         submit = new Button("ADD");
+        update = new Button("UPDATE");
+        update.setDisable(true);
+        delete = new Button("REMOVE");
+        delete.setDisable(true);
         
         inputForm = new HBox();
         inputForm.setSpacing(20);
         
-        inputForm.getChildren().addAll(heightLabel, heightField, weightLabel, weightField, submit);
+        inputForm.getChildren().addAll(dateLabel, dateField, heightLabel, heightField, weightLabel, weightField, submit, update, delete);
+        
+        
+        
         
 //        insertNodes(root, id);
         root.getChildren().add(0, headerLabel);
+        // Body
         root.getChildren().add(1, populatetable(id, home.createTable()));
         root.getChildren().add(2, inputForm);
-
         root.setMargin(headerLabel, new Insets(0,10,10,10));
         root.setAlignment(Pos.CENTER);
-        
         root.setMargin(headerLabel, new Insets(10,10,10,10));
         root.setMargin(root.getChildren().get(1), new Insets(10,10,10,10));
         root.setMargin(inputForm, new Insets(10,10,10,10));
@@ -91,6 +109,24 @@ public class home {
             }
            root.getChildren().remove(1);
            root.getChildren().add(1, populatetable(id, createTable()));
+        });
+        
+        update.setOnAction((e) -> {
+        	db.updateBMITrack(Double.valueOf(heightField.getText()), Double.valueOf(weightField.getText()), dateField.getText());
+        	root.getChildren().remove(1);
+            root.getChildren().add(1, populatetable(id, createTable()));
+            submit.setDisable(false);
+            update.setDisable(true);
+            delete.setDisable(true);
+        });
+        
+        delete.setOnAction((e) -> {
+        	db.deleteBMITrack(dateField.getText());
+        	root.getChildren().remove(1);
+            root.getChildren().add(1, populatetable(id, createTable()));
+            submit.setDisable(false);
+            update.setDisable(true);
+            delete.setDisable(true);
         });
         
 //        long lastRefreshTime = 0;
@@ -129,20 +165,28 @@ public class home {
         
         try {
                 while (dataTable.next()) {
-                    System.out.println("sini masuk");
                     BMI_Datas.add(new bmi_Track(dataTable.getInt(1), dataTable.getString(2), dataTable.getDouble(3), dataTable.getDouble(4)));
                 }
         } catch (SQLException ex) {
             System.out.println("Erorr di populate vector untuk mengisi table");
         }
-        System.out.println(BMI_Datas.size());
+        System.out.println("Banyak Rows : " + BMI_Datas.size());
 //        if (!BMI_Datas.isEmpty()) {
 //                for (bmi_Track bmi : BMI_Datas) {
                     tableView.setItems(FXCollections.observableArrayList(BMI_Datas));
 //                }
 //        } 
         
-        
+          tableView.setOnMouseClicked(e -> {
+        	  bmi_Track selectedItem = (bmi_Track) tableView.getSelectionModel().getSelectedItem();
+        	  dateField.setText(selectedItem.getDateCreated());
+        	  weightField.setText(String.valueOf(selectedItem.getWeight()));
+        	  heightField.setText(String.valueOf(selectedItem.getHeight()));
+        	  update.setDisable(false);
+        	  delete.setDisable(false);
+        	  submit.setDisable(true);
+          });
+                    
         return tableView;
     } 
     
